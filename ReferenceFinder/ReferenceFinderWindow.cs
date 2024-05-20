@@ -59,6 +59,14 @@ public class ReferenceFinderWindow : EditorWindow
         data.LogToFileDependenced();
     }
 
+    [MenuItem("Window/Delete Unused Files in Folders")]
+    public static void DeleteFilesInScreenFolders()
+    {
+        string filePath = "need_delete_fbx.txt";
+        string targetFolder = "/Scene/";
+        data.DeleteFilesRecursive(filePath, targetFolder);
+    }
+
     //初始化数据
     static void InitDataIfNeeded()
     {

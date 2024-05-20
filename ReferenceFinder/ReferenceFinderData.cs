@@ -60,6 +60,11 @@ public class ReferenceFinderData
         LogerSorterFile.LogToFileDependenced(ref assetDict);
     }
 
+    public void DeleteFilesRecursive(string path, string targetFolder)
+    {
+        LogerSorterFile.DeleteFilesRecursive(path, targetFolder);
+    }
+
     //通过依赖信息更新引用信息
     private void UpdateReferenceInfo()
     {

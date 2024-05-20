@@ -132,6 +132,39 @@ public static class LogerSorterFile
         EditorUtility.ClearProgressBar();
     }
 
+    public static void DeleteFilesRecursive(string filePath, string targetFolder)
+    {
+        string realFilePath = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "needDeleteCatalogue", filePath);
+        string[] lines = File.ReadAllLines(realFilePath);
+
+        int count = 0;
+
+        foreach (string line in lines)
+        {
+            // 假设每行都是完整的文件路径和大小（带括号和空格）  
+            // 我们需要去掉括号和大小信息，只保留文件路径  
+            int index = line.IndexOf('(');
+            if (index != -1)
+            {
+                string filePathWithoutSize = line.Substring(0, index).Trim(); // 去除括号和空格  
+
+                // 检查路径是否包含 "Scene" 目录  
+                if (filePathWithoutSize.Contains(targetFolder))
+                {
+                    File.Delete(filePathWithoutSize);
+                    UnityEngine.Debug.Log("Deleted: " + filePathWithoutSize);
+                    count++;
+                }
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("Invalid line format: " + line);
+            }
+        }
+
+        UnityEngine.Debug.Log("Deleted Num: " + count);
+    }
+
     // 获取扩展名并转为小写  
     private static string GetFileNameExtention(string filePath)
     {
